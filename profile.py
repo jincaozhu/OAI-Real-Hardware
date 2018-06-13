@@ -154,7 +154,8 @@ else:
     connectOAI_DS(enb1, 0)
     enb1.addService(rspec.Execute(shell="sh", command=GLOBALS.OAI_CONF_SCRIPT + " -r ENB"))
     enb1_rue1_rf = enb1.addInterface("rue1_rf")
-    enb2_nfapi_if.addAddress( rspec.IPv4Address( "192.168.10.1", "255.255.255.0" ) ) # nfapi interface	
+    enb1_nfapi_if = enb1.addInterface("enb1_nfapi")
+    enb1_nfapi_if.addAddress( rspec.IPv4Address( "192.168.10.1", "255.255.255.0" ) ) # nfapi interface	
 	
     #add a RRC node(L2)
     enb2 = request.RawPC("enb2")
@@ -165,6 +166,7 @@ else:
     enb2.Desire( "rf-radiated" if params.TYPE == "ota" else "rf-controlled", 1 )
     connectOAI_DS(enb2, 0)
     enb2.addService(rspec.Execute(shell="sh", command=GLOBALS.OAI_CONF_SCRIPT + " -r ENB"))
+    enb2_nfapi_if = enb1.addInterface("enb2_nfapi")
     enb2_nfapi_if.addAddress( rspec.IPv4Address( "192.168.10.2", "255.255.255.0" ) ) # nfapi interface
 	
     nfapilink = request.Link( "nfapi" )
