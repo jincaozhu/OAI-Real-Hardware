@@ -169,9 +169,14 @@ else:
     enb2_nfapi_if = enb2.addInterface("enb2_nfapi")
     enb2_nfapi_if.addAddress( rspec.IPv4Address( "192.168.10.2", "255.255.255.0" ) ) # nfapi interface
 	
-    #nfapilink = request.Link( "nfapi" )
+    nfapilink = request.Link( "nfapi" )
     #nfapilink.addInterface( enb2_nfapi_if )
     #nfapilink.addInterface( enb1_nfapi_if )
+    epclink.addNode(enb1)
+    epclink.addNode(enb2)
+    epclink.link_multiplexing = True
+    epclink.vlan_tagging = True
+    epclink.best_effort = True
 		
     # Add an OTS (Nexus 5) UE
     rue1 = request.UE("rue1")
