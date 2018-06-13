@@ -172,11 +172,11 @@ else:
     nfapilink = request.Link( "nfapi" )
     #nfapilink.addInterface( enb2_nfapi_if )
     #nfapilink.addInterface( enb1_nfapi_if )
-    epclink.addNode(enb1)
-    epclink.addNode(enb2)
-    epclink.link_multiplexing = True
-    epclink.vlan_tagging = True
-    epclink.best_effort = True
+    nfapilink.addNode(enb1)
+    nfapilink.addNode(enb2)
+    nfapilink.link_multiplexing = True
+    nfapilink.vlan_tagging = True
+    nfapilink.best_effort = True
 		
     # Add an OTS (Nexus 5) UE
     rue1 = request.UE("rue1")
