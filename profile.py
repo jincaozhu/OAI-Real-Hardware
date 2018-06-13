@@ -163,7 +163,7 @@ else:
         enb2.component_id = params.FIXED_ENB
     enb2.hardware_type = "d430"
     enb2.disk_image = GLOBALS.OAI_ENB_IMG
-    enb2.Desire( "rf-radiated" if params.TYPE == "ota" else "rf-controlled", 1 )
+    #enb2.Desire( "rf-radiated" if params.TYPE == "ota" else "rf-controlled", 1 )
     connectOAI_DS(enb2, 0)
     enb2.addService(rspec.Execute(shell="sh", command=GLOBALS.OAI_CONF_SCRIPT + " -r ENB"))
     enb2_nfapi_if = enb2.addInterface("enb2_nfapi")
