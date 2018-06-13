@@ -154,7 +154,23 @@ else:
     connectOAI_DS(enb1, 0)
     enb1.addService(rspec.Execute(shell="sh", command=GLOBALS.OAI_CONF_SCRIPT + " -r ENB"))
     enb1_rue1_rf = enb1.addInterface("rue1_rf")
-
+    enb2_nfapi_if.addAddress( rspec.IPv4Address( "192.168.10.1", "255.255.255.0" ) ) # nfapi interface	
+	
+    #add a RRC node(L2)
+    enb2 = request.RawPC("enb2")
+    if params.FIXED_ENB:
+        enb2.component_id = params.FIXED_ENB
+    enb2.hardware_type = "d430"
+    enb2.disk_image = GLOBALS.OAI_ENB_IMG
+    enb2.Desire( "rf-radiated" if params.TYPE == "ota" else "rf-controlled", 1 )
+    connectOAI_DS(enb2, 0)
+    enb2.addService(rspec.Execute(shell="sh", command=GLOBALS.OAI_CONF_SCRIPT + " -r ENB"))
+    enb2_nfapi_if.addAddress( rspec.IPv4Address( "192.168.10.2", "255.255.255.0" ) ) # nfapi interface
+	
+    nfapilink = request.Link( "nfapi" )
+    nfapilink.addInterface( enb2_nfapi_if )
+    nfapilink.addInterface( enb1_nfapi_if )
+		
     # Add an OTS (Nexus 5) UE
     rue1 = request.UE("rue1")
     if params.FIXED_UE:
@@ -171,7 +187,7 @@ else:
     rflink2.addInterface(rue1_enb1_rf)
 
     # Add a link connecting the NUC eNB and the OAI EPC node.
-    epclink.addNode(enb1)
+    epclink.addNode(enb2)
 
 # Add OAI EPC (HSS, MME, SPGW) node.
 epc = request.RawPC("epc")
