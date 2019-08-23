@@ -71,7 +71,7 @@ class GLOBALS(object):
     OAI_ENB_IMG = URN.Image(PN.PNDEFS.PNET_AM, "PhantomNet:OAI-Real-Hardware.enb1")
     OAI_SIM_IMG = URN.Image(PN.PNDEFS.PNET_AM, "PhantomNet:UBUNTU14-64-OAI")
     OAI_CONF_SCRIPT = "/usr/bin/sudo /local/repository/bin/config_oai.pl"
-    SIM_HWTYPE = "d430"
+    SIM_HWTYPE = "d740"
     NUC_HWTYPE = "nuc5300"
     UE_HWTYPE = "nexus5"
 
@@ -161,7 +161,7 @@ else:
     enb2 = request.RawPC("enb2")
     if params.FIXED_ENB:
         enb2.component_id = params.FIXED_ENB
-    enb2.hardware_type = "d430"
+    enb2.hardware_type = "d740"
     enb2.disk_image = GLOBALS.OAI_ENB_IMG
     #enb2.Desire( "rf-radiated" if params.TYPE == "ota" else "rf-controlled", 1 )
     connectOAI_DS(enb2, 0)
@@ -198,6 +198,7 @@ else:
 
 # Add OAI EPC (HSS, MME, SPGW) node.
 epc = request.RawPC("epc")
+epc.hardware_type = "d740"
 epc.disk_image = GLOBALS.OAI_EPC_IMG
 epc.addService(rspec.Execute(shell="sh", command=GLOBALS.OAI_CONF_SCRIPT + " -r EPC"))
 connectOAI_DS(epc, 0)
